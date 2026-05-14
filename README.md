@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./public/logo.svg" width="128" alt="GitLab License Generator logo" />
+
 # GitLab License Generator
 
 A static web app that generates GitLab development licenses **entirely in your browser**.

@@ -1,22 +1,21 @@
 import { useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Empty, Space, Tabs, Typography, message } from 'antd'
-import { CopyOutlined, DownloadOutlined } from '@ant-design/icons'
+import { Alert, Button, Card, Empty, Space, Tabs, Typography } from 'antd'
+import { ClearOutlined, DownloadOutlined } from '@ant-design/icons'
 
 import type { GeneratedLicense } from '../crypto/license'
 import { downloadText } from '../lib/download'
+import CodeBlock from './CodeBlock'
 
-export default function ResultPanel({ result }: { result: GeneratedLicense | null }) {
+interface ResultPanelProps {
+  result: GeneratedLicense | null
+  onClear: () => void
+}
+
+export default function ResultPanel({ result, onClear }: ResultPanelProps) {
   const { t } = useTranslation()
 
-  const copy = (text: string) => {
-    void navigator.clipboard.writeText(text).then(
-      () => message.success(t('result.copied')),
-      () => undefined,
-    )
-  }
-
   return (
-    <Card title={t('result.title')}>
+    <Card title={t('result.title')} style={{ width: '100%' }}>
       {!result ? (
         <Empty description={t('result.empty')} />
       ) : (
@@ -27,7 +26,7 @@ export default function ResultPanel({ result }: { result: GeneratedLicense | nul
               {
                 key: 'json',
                 label: t('result.jsonTab'),
-                children: <pre className="key-block">{result.json}</pre>,
+                children: <CodeBlock content={result.json} maxHeight={420} />,
               },
               {
                 key: 'blob',
@@ -37,7 +36,7 @@ export default function ResultPanel({ result }: { result: GeneratedLicense | nul
                     <Typography.Paragraph type="secondary" style={{ fontSize: 12 }}>
                       {t('result.blobHint')}
                     </Typography.Paragraph>
-                    <pre className="key-block">{result.blob}</pre>
+                    <CodeBlock content={result.blob} maxHeight={520} />
                   </>
                 ),
               },
@@ -51,11 +50,8 @@ export default function ResultPanel({ result }: { result: GeneratedLicense | nul
             >
               {t('result.download')}
             </Button>
-            <Button icon={<CopyOutlined />} onClick={() => copy(result.blob)}>
-              {t('result.blobTab')}
-            </Button>
-            <Button icon={<CopyOutlined />} onClick={() => copy(result.json)}>
-              {t('result.jsonTab')}
+            <Button icon={<ClearOutlined />} onClick={onClear}>
+              {t('result.clear')}
             </Button>
           </Space>
         </Space>

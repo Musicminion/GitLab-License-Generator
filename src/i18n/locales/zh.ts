@@ -5,7 +5,7 @@ const zh: typeof en = {
     title: 'GitLab License 生成器',
     subtitle: '完全在浏览器本地生成 GitLab 开发用 License,不会上传任何数据。',
     disclaimer: '仅供开发和测试用途。你需自行遵守 GitLab 的相关条款。',
-    footer: '100% 纯前端运行 · WTFPL 协议',
+    footer: '© Ayaka-notes 2026 · WTFPL 协议',
   },
   tabs: {
     generate: '生成 License',
@@ -26,6 +26,8 @@ const zh: typeof en = {
     keySourceBundled: '内置密钥',
     keySourceGenerated: '已生成的密钥对',
     keySourceGeneratedHint: '请先在「密钥工具」标签页生成一个密钥对。',
+    selectKeyPair: '密钥对',
+    selectKeyPairPlaceholder: '选择一个已生成的密钥对',
     advanced: '高级选项',
     generate: '生成 License',
     reset: '恢复默认值',
@@ -42,7 +44,7 @@ const zh: typeof en = {
     invalidDate: '请输入有效的日期。',
     expiryInPast: '到期日期必须晚于今天。',
     generateFailed: 'License 生成失败:{{message}}',
-    noGeneratedKey: '没有可用的已生成密钥对,请先在「密钥工具」标签页创建。',
+    noGeneratedKey: '请选择一个已生成的密钥对。',
   },
   result: {
     title: '生成结果',
@@ -51,8 +53,7 @@ const zh: typeof en = {
     blobTab: 'License 文件',
     blobHint: '这就是 result.gitlab-license 的文件内容。',
     download: '下载 result.gitlab-license',
-    copy: '复制',
-    copied: '已复制',
+    clear: '清除',
     verified: '已回环校验:该文件可解密还原为上方的 JSON。',
   },
   deploy: {
@@ -88,25 +89,30 @@ const zh: typeof en = {
   },
   keys: {
     title: 'RSA 密钥对',
+    warning: '请妥善保管私钥。如果用自己的密钥对签名,必须把对应公钥安装到 GitLab。',
     bundledTitle: '内置密钥对',
     bundledIntro:
       '默认情况下,License 由本项目内置的密钥对签名。其公钥就是你需要安装到 GitLab 的那把。',
     showPublic: '查看内置公钥',
+    downloadPublic: '下载 public.key',
+    downloadPrivate: '下载 private.key',
     generateTitle: '生成你自己的密钥对',
     generateIntro:
       '想用独立的密钥对?生成一对全新的 2048 位 RSA 密钥。私钥用于签名 License,公钥需安装到 GitLab。',
     generateButton: '生成新密钥对',
     generating: '生成中…',
+    generatedSuccess: '密钥对已生成并保存。',
+    savedHint: '生成的密钥对会保存在当前浏览器中,可在「生成 License」标签页作为签名密钥选用。',
+    listTitle: '已生成的密钥对',
+    empty: '还没有密钥对 —— 在上方生成一个吧。',
     privateKey: '私钥',
     publicKey: '公钥',
-    downloadPrivate: '下载 private.key',
-    downloadPublic: '下载 public.key',
-    useForGeneration: '使用此密钥对生成 License',
-    inUse: '当前已选用此生成的密钥对来生成 License。',
-    warning: '请妥善保管私钥。如果使用自己生成的密钥对,必须把对应公钥安装到 GitLab。',
+    deleteConfirm: '确定删除这个密钥对吗?',
   },
   common: {
     language: '语言',
+    copy: '复制',
+    copied: '已复制',
   },
 }
 

@@ -5,6 +5,7 @@ import { DownloadOutlined } from '@ant-design/icons'
 
 import { BUNDLED_PUBLIC_KEY_PEM } from '../crypto/keys'
 import { downloadText } from '../lib/download'
+import CodeBlock from './CodeBlock'
 
 type Method = 'omnibus' | 'docker' | 'compose' | 'helm'
 
@@ -105,7 +106,7 @@ export default function DeployInstructions() {
               message={t('deploy.helmWarning')}
             />
           )}
-          <pre className="code-block">{COMMANDS[method]}</pre>
+          <CodeBlock content={COMMANDS[method]} variant="dark" />
         </div>
 
         <div>
@@ -120,7 +121,7 @@ export default function DeployInstructions() {
           <Typography.Paragraph type="secondary">
             {t('deploy.servicePingDesc')}
           </Typography.Paragraph>
-          <pre className="code-block">{SERVICE_PING}</pre>
+          <CodeBlock content={SERVICE_PING} variant="dark" />
         </div>
 
         <Alert type="info" showIcon message={t('deploy.troubleshootDesc')} />

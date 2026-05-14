@@ -10,7 +10,7 @@ import {
   type LicensePlan,
 } from '../crypto/license'
 import { BUNDLED_PRIVATE_KEY_PEM } from '../crypto/keys'
-import type { GeneratedKeyPair } from '../crypto/keygen'
+import type { StoredKeyPair } from '../lib/useKeyPairs'
 
 interface FormFields {
   name: string
@@ -22,6 +22,7 @@ interface FormFields {
   expiresAt: Dayjs
   blockChangesAt: Dayjs
   keySource: 'bundled' | 'generated'
+  keyPairId?: string
 }
 
 const initialValues = (): FormFields => ({
@@ -36,26 +37,29 @@ const initialValues = (): FormFields => ({
   expiresAt: dayjs(DEFAULT_FORM.expiresAt),
   blockChangesAt: dayjs(DEFAULT_FORM.blockChangesAt),
   keySource: 'bundled',
+  keyPairId: undefined,
 })
 
 interface LicenseFormProps {
-  generatedKeyPair: GeneratedKeyPair | null
+  keyPairs: StoredKeyPair[]
   onGenerated: (result: GeneratedLicense) => void
 }
 
-export default function LicenseForm({ generatedKeyPair, onGenerated }: LicenseFormProps) {
+export default function LicenseForm({ keyPairs, onGenerated }: LicenseFormProps) {
   const { t } = useTranslation()
   const [form] = Form.useForm<FormFields>()
+  const keySource = Form.useWatch('keySource', form)
 
   const onFinish = (values: FormFields) => {
     try {
       let privateKeyPem = BUNDLED_PRIVATE_KEY_PEM
       if (values.keySource === 'generated') {
-        if (!generatedKeyPair) {
+        const pair = keyPairs.find((kp) => kp.id === values.keyPairId)
+        if (!pair) {
           message.error(t('errors.noGeneratedKey'))
           return
         }
-        privateKeyPem = generatedKeyPair.privateKeyPem
+        privateKeyPem = pair.privateKeyPem
       }
 
       const result = generateLicense(
@@ -82,7 +86,7 @@ export default function LicenseForm({ generatedKeyPair, onGenerated }: LicenseFo
   }
 
   return (
-    <Card title={t('form.title')}>
+    <Card title={t('form.title')} style={{ width: '100%' }}>
       <Form
         form={form}
         layout="vertical"
@@ -174,21 +178,34 @@ export default function LicenseForm({ generatedKeyPair, onGenerated }: LicenseFo
           <DatePicker style={{ width: '100%' }} />
         </Form.Item>
 
-        <Form.Item name="keySource" label={t('form.keySource')}>
+        <Form.Item name="keySource" label={t('form.keySource')} style={{ marginBottom: 8 }}>
           <Radio.Group>
             <Radio value="bundled">{t('form.keySourceBundled')}</Radio>
-            <Radio value="generated" disabled={!generatedKeyPair}>
+            <Radio value="generated" disabled={keyPairs.length === 0}>
               {t('form.keySourceGenerated')}
             </Radio>
           </Radio.Group>
         </Form.Item>
-        {!generatedKeyPair && (
-          <Form.Item style={{ marginTop: -16 }}>
-            <span style={{ color: '#999', fontSize: 12 }}>
-              {t('form.keySourceGeneratedHint')}
-            </span>
-          </Form.Item>
-        )}
+
+        {keySource === 'generated' &&
+          (keyPairs.length === 0 ? (
+            <Form.Item>
+              <span style={{ color: '#999', fontSize: 12 }}>
+                {t('form.keySourceGeneratedHint')}
+              </span>
+            </Form.Item>
+          ) : (
+            <Form.Item
+              name="keyPairId"
+              label={t('form.selectKeyPair')}
+              rules={[{ required: true, message: t('errors.noGeneratedKey') }]}
+            >
+              <Select
+                placeholder={t('form.selectKeyPairPlaceholder')}
+                options={keyPairs.map((kp) => ({ value: kp.id, label: kp.name }))}
+              />
+            </Form.Item>
+          ))}
 
         <Form.Item style={{ marginBottom: 0 }}>
           <Space>

@@ -7,7 +7,7 @@ const fr: typeof en = {
       'Générez des licences de développement GitLab entièrement dans votre navigateur — rien n’est envoyé.',
     disclaimer:
       'À des fins de développement et de test uniquement. Le respect des conditions de GitLab vous incombe.',
-    footer: '100 % côté client · WTFPL',
+    footer: '© Ayaka-notes 2026 · WTFPL',
   },
   tabs: {
     generate: 'Générer une licence',
@@ -28,6 +28,8 @@ const fr: typeof en = {
     keySourceBundled: 'Clé intégrée',
     keySourceGenerated: 'Paire de clés générée',
     keySourceGeneratedHint: 'Générez d’abord une paire de clés dans l’onglet Outils de clés.',
+    selectKeyPair: 'Paire de clés',
+    selectKeyPairPlaceholder: 'Sélectionnez une paire de clés générée',
     advanced: 'Avancé',
     generate: 'Générer la licence',
     reset: 'Réinitialiser',
@@ -44,8 +46,7 @@ const fr: typeof en = {
     invalidDate: 'Saisissez une date valide.',
     expiryInPast: 'La date d’expiration doit être dans le futur.',
     generateFailed: 'Échec de la génération de la licence : {{message}}',
-    noGeneratedKey:
-      'Aucune paire de clés générée disponible. Créez-en une dans l’onglet Outils de clés.',
+    noGeneratedKey: 'Veuillez sélectionner une paire de clés générée.',
   },
   result: {
     title: 'Licence générée',
@@ -54,8 +55,7 @@ const fr: typeof en = {
     blobTab: 'Fichier de licence',
     blobHint: 'Voici le contenu de result.gitlab-license.',
     download: 'Télécharger result.gitlab-license',
-    copy: 'Copier',
-    copied: 'Copié',
+    clear: 'Effacer',
     verified: 'Vérifié par aller-retour : le fichier se déchiffre bien vers le JSON ci-dessus.',
   },
   deploy: {
@@ -95,26 +95,32 @@ const fr: typeof en = {
   },
   keys: {
     title: 'Paire de clés RSA',
+    warning:
+      'Gardez les clés privées en sécurité. Si vous signez avec votre propre paire, vous devez installer sa clé publique dans GitLab.',
     bundledTitle: 'Paire de clés intégrée',
     bundledIntro:
       'Par défaut, les licences sont signées avec la paire de clés fournie dans ce projet. Sa clé publique est celle à installer dans GitLab.',
     showPublic: 'Afficher la clé publique intégrée',
+    downloadPublic: 'Télécharger public.key',
+    downloadPrivate: 'Télécharger private.key',
     generateTitle: 'Générer votre propre paire de clés',
     generateIntro:
       'Vous préférez une paire de clés unique ? Générez une nouvelle paire RSA de 2048 bits. La clé privée signe les licences ; installez la clé publique dans GitLab.',
     generateButton: 'Générer une nouvelle paire de clés',
     generating: 'Génération…',
+    generatedSuccess: 'Paire de clés générée et enregistrée.',
+    savedHint:
+      'Les paires de clés générées sont enregistrées dans ce navigateur et peuvent être choisies comme clé de signature dans l’onglet Générer une licence.',
+    listTitle: 'Paires de clés générées',
+    empty: 'Aucune paire de clés — générez-en une ci-dessus.',
     privateKey: 'Clé privée',
     publicKey: 'Clé publique',
-    downloadPrivate: 'Télécharger private.key',
-    downloadPublic: 'Télécharger public.key',
-    useForGeneration: 'Utiliser cette paire de clés pour la génération de licence',
-    inUse: 'Cette paire de clés générée est maintenant sélectionnée pour la génération de licence.',
-    warning:
-      'Gardez la clé privée en sécurité. Si vous générez votre propre paire, vous devez installer sa clé publique dans GitLab.',
+    deleteConfirm: 'Supprimer cette paire de clés ?',
   },
   common: {
     language: 'Langue',
+    copy: 'Copier',
+    copied: 'Copié',
   },
 }
 

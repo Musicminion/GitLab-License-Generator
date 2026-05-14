@@ -36,11 +36,11 @@ export interface LicenseAttributes {
   restrictions: { plan: LicensePlan; active_user_count: number }
 }
 
-/** Defaults mirror `src/generator.license.rb`. */
+/** Default licensee details; date/plan defaults mirror `src/generator.license.rb`. */
 export const DEFAULT_FORM: LicenseFormValues = {
-  name: 'Tim Cook',
-  company: 'Apple Computer, Inc.',
-  email: 'tcook@apple.com',
+  name: 'gitlab',
+  company: 'ayaka-notes',
+  email: 'gitlab@ayaka.space',
   plan: 'ultimate',
   userCount: 2147483647,
   startsAt: '1976-04-01',

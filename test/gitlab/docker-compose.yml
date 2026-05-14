@@ -1,0 +1,54 @@
+# Throwaway GitLab EE instance for testing licenses produced by this project.
+#
+# It mounts the project's bundled public key over GitLab's license encryption
+# key, so any license signed with the "Bundled key" option is accepted.
+#
+#   docker compose up -d          # pull + start (first boot takes ~3-6 min)
+#   docker compose logs -f        # watch boot progress
+#   docker compose down           # stop (keeps volumes)
+#   docker compose down -v        # stop + wipe all data
+#
+# Once healthy:
+#   - Web UI:  http://localhost:8929
+#   - User:    root
+#   - Initial password (valid 24h):
+#       docker compose exec gitlab cat /etc/gitlab/initial_root_password
+#   - Upload a generated license at: http://localhost:8929/admin/license/new
+
+name: gitlab-license-test
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ee:18.11.3-ee.0
+    container_name: gitlab-license-test
+    restart: unless-stopped
+    hostname: gitlab.local
+    shm_size: '256m'
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'http://localhost:8929'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2224
+        # Trim the footprint for a disposable test instance.
+        prometheus_monitoring['enable'] = false
+        gitlab_rails['usage_ping_enabled'] = false
+        puma['worker_processes'] = 2
+    ports:
+      - '8929:8929'
+      - '2224:22'
+    volumes:
+      - gitlab-config:/etc/gitlab
+      - gitlab-logs:/var/log/gitlab
+      - gitlab-data:/var/opt/gitlab
+      # Install the license generator's public key so self-signed licenses validate.
+      - ../../keys/public.key:/opt/gitlab/embedded/service/gitlab-rails/.license_encryption_key.pub:ro
+    healthcheck:
+      test: ['CMD', 'curl', '-fsS', 'http://localhost:8929/-/health']
+      interval: 30s
+      timeout: 10s
+      retries: 30
+      start_period: 360s
+
+volumes:
+  gitlab-config:
+  gitlab-logs:
+  gitlab-data:

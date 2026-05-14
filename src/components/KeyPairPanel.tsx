@@ -1,18 +1,15 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Collapse, Space, Typography, message } from 'antd'
-import { DownloadOutlined, KeyOutlined } from '@ant-design/icons'
+import { Alert, Button, Card, Collapse, Empty, List, Popconfirm, Space, Typography, message } from 'antd'
+import { DeleteOutlined, DownloadOutlined, KeyOutlined } from '@ant-design/icons'
 
-import { generateKeyPair, type GeneratedKeyPair } from '../crypto/keygen'
+import { generateKeyPair } from '../crypto/keygen'
 import { BUNDLED_PUBLIC_KEY_PEM } from '../crypto/keys'
 import { downloadText } from '../lib/download'
+import type { KeyPairStore } from '../lib/useKeyPairs'
+import CodeBlock from './CodeBlock'
 
-interface KeyPairPanelProps {
-  generatedKeyPair: GeneratedKeyPair | null
-  onGenerated: (keyPair: GeneratedKeyPair) => void
-}
-
-export default function KeyPairPanel({ generatedKeyPair, onGenerated }: KeyPairPanelProps) {
+export default function KeyPairPanel({ store }: { store: KeyPairStore }) {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
 
@@ -20,7 +17,8 @@ export default function KeyPairPanel({ generatedKeyPair, onGenerated }: KeyPairP
     setLoading(true)
     try {
       const keyPair = await generateKeyPair()
-      onGenerated(keyPair)
+      store.addKeyPair(keyPair)
+      message.success(t('keys.generatedSuccess'))
     } catch (err) {
       message.error(err instanceof Error ? err.message : String(err))
     } finally {
@@ -39,7 +37,7 @@ export default function KeyPairPanel({ generatedKeyPair, onGenerated }: KeyPairP
             {
               key: 'public',
               label: t('keys.showPublic'),
-              children: <pre className="key-block">{BUNDLED_PUBLIC_KEY_PEM}</pre>,
+              children: <CodeBlock content={BUNDLED_PUBLIC_KEY_PEM} />,
             },
           ]}
         />
@@ -62,35 +60,87 @@ export default function KeyPairPanel({ generatedKeyPair, onGenerated }: KeyPairP
         >
           {loading ? t('keys.generating') : t('keys.generateButton')}
         </Button>
+        <Typography.Paragraph type="secondary" style={{ fontSize: 12, marginTop: 12, marginBottom: 0 }}>
+          {t('keys.savedHint')}
+        </Typography.Paragraph>
+      </Card>
 
-        {generatedKeyPair && (
-          <Space direction="vertical" size="middle" style={{ display: 'flex', marginTop: 16 }}>
-            <Alert type="success" showIcon message={t('keys.inUse')} />
-
-            <div>
-              <Typography.Text strong>{t('keys.publicKey')}</Typography.Text>
-              <pre className="key-block">{generatedKeyPair.publicKeyPem}</pre>
-              <Button
-                size="small"
-                icon={<DownloadOutlined />}
-                onClick={() => downloadText('public.key', generatedKeyPair.publicKeyPem)}
-              >
-                {t('keys.downloadPublic')}
-              </Button>
-            </div>
-
-            <div>
-              <Typography.Text strong>{t('keys.privateKey')}</Typography.Text>
-              <pre className="key-block">{generatedKeyPair.privateKeyPem}</pre>
-              <Button
-                size="small"
-                icon={<DownloadOutlined />}
-                onClick={() => downloadText('private.key', generatedKeyPair.privateKeyPem)}
-              >
-                {t('keys.downloadPrivate')}
-              </Button>
-            </div>
-          </Space>
+      <Card title={`${t('keys.listTitle')} (${store.keyPairs.length})`}>
+        {store.keyPairs.length === 0 ? (
+          <Empty description={t('keys.empty')} />
+        ) : (
+          <List
+            dataSource={[...store.keyPairs].reverse()}
+            renderItem={(kp) => (
+              <List.Item key={kp.id}>
+                <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                      gap: 8,
+                    }}
+                  >
+                    <Typography.Text
+                      strong
+                      editable={{ onChange: (value) => store.renameKeyPair(kp.id, value) }}
+                    >
+                      {kp.name}
+                    </Typography.Text>
+                    <Space>
+                      <Typography.Text type="secondary" style={{ fontSize: 12 }}>
+                        {new Date(kp.createdAt).toLocaleString()}
+                      </Typography.Text>
+                      <Popconfirm
+                        title={t('keys.deleteConfirm')}
+                        onConfirm={() => store.removeKeyPair(kp.id)}
+                      >
+                        <Button size="small" danger icon={<DeleteOutlined />} />
+                      </Popconfirm>
+                    </Space>
+                  </div>
+                  <Collapse
+                    size="small"
+                    items={[
+                      {
+                        key: 'public',
+                        label: t('keys.publicKey'),
+                        children: (
+                          <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                            <CodeBlock content={kp.publicKeyPem} />
+                            <Button
+                              size="small"
+                              icon={<DownloadOutlined />}
+                              onClick={() => downloadText('public.key', kp.publicKeyPem)}
+                            >
+                              {t('keys.downloadPublic')}
+                            </Button>
+                          </Space>
+                        ),
+                      },
+                      {
+                        key: 'private',
+                        label: t('keys.privateKey'),
+                        children: (
+                          <Space direction="vertical" size="small" style={{ width: '100%' }}>
+                            <CodeBlock content={kp.privateKeyPem} />
+                            <Button
+                              size="small"
+                              icon={<DownloadOutlined />}
+                              onClick={() => downloadText('private.key', kp.privateKeyPem)}
+                            >
+                              {t('keys.downloadPrivate')}
+                            </Button>
+                          </Space>
+                        ),
+                      },
+                    ]}
+                  />
+                </Space>
+              </List.Item>
+            )}
+          />
         )}
       </Card>
     </Space>

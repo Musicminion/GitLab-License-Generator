@@ -4,7 +4,7 @@ const en = {
     subtitle: 'Generate GitLab development licenses entirely in your browser — nothing is uploaded.',
     disclaimer:
       'For development and testing purposes only. You are responsible for complying with GitLab’s terms.',
-    footer: 'Runs 100% client-side · WTFPL',
+    footer: '© Ayaka-notes 2026 · WTFPL',
   },
   tabs: {
     generate: 'Generate License',
@@ -25,6 +25,8 @@ const en = {
     keySourceBundled: 'Bundled key',
     keySourceGenerated: 'Generated key pair',
     keySourceGeneratedHint: 'Generate a key pair in the Key Tools tab first.',
+    selectKeyPair: 'Key pair',
+    selectKeyPairPlaceholder: 'Select a generated key pair',
     advanced: 'Advanced',
     generate: 'Generate license',
     reset: 'Reset to defaults',
@@ -41,7 +43,7 @@ const en = {
     invalidDate: 'Enter a valid date.',
     expiryInPast: 'Expiry date must be in the future.',
     generateFailed: 'License generation failed: {{message}}',
-    noGeneratedKey: 'No generated key pair available. Create one in the Key Tools tab.',
+    noGeneratedKey: 'Please select a generated key pair.',
   },
   result: {
     title: 'Generated license',
@@ -50,8 +52,7 @@ const en = {
     blobTab: 'License file',
     blobHint: 'This is the content of result.gitlab-license.',
     download: 'Download result.gitlab-license',
-    copy: 'Copy',
-    copied: 'Copied',
+    clear: 'Clear',
     verified: 'Round-trip verified: the file decrypts back to the JSON above.',
   },
   deploy: {
@@ -91,26 +92,32 @@ const en = {
   },
   keys: {
     title: 'RSA key pair',
+    warning:
+      'Keep private keys safe. If you sign with your own pair, you must install its public key into GitLab.',
     bundledTitle: 'Bundled key pair',
     bundledIntro:
       'By default licenses are signed with the key pair shipped in this project. Its public key is what you install into GitLab.',
     showPublic: 'Show bundled public key',
+    downloadPublic: 'Download public.key',
+    downloadPrivate: 'Download private.key',
     generateTitle: 'Generate your own key pair',
     generateIntro:
       'Prefer a unique key pair? Generate a fresh 2048-bit RSA pair. The private key signs licenses; install the public key into GitLab.',
     generateButton: 'Generate new key pair',
     generating: 'Generating…',
+    generatedSuccess: 'Key pair generated and saved.',
+    savedHint:
+      'Generated key pairs are saved in this browser and can be picked as the signing key on the Generate License tab.',
+    listTitle: 'Generated key pairs',
+    empty: 'No key pairs yet — generate one above.',
     privateKey: 'Private key',
     publicKey: 'Public key',
-    downloadPrivate: 'Download private.key',
-    downloadPublic: 'Download public.key',
-    useForGeneration: 'Use this key pair for license generation',
-    inUse: 'This generated key pair is now selected for license generation.',
-    warning:
-      'Keep the private key safe. If you generate your own pair, you must install its public key into GitLab.',
+    deleteConfirm: 'Delete this key pair?',
   },
   common: {
     language: 'Language',
+    copy: 'Copy',
+    copied: 'Copied',
   },
 }
 
