@@ -11,6 +11,7 @@ const fr: typeof en = {
   },
   tabs: {
     generate: 'Générer une licence',
+    verify: 'Vérifier la licence',
     deploy: 'Guide de déploiement',
     keys: 'Outils de clés',
   },
@@ -58,11 +59,32 @@ const fr: typeof en = {
     clear: 'Effacer',
     verified: 'Vérifié par aller-retour : le fichier se déchiffre bien vers le JSON ci-dessus.',
   },
+  verify: {
+    title: 'Vérifier une licence',
+    resultTitle: 'Résultat de la vérification',
+    intro:
+      'Collez ou téléversez un fichier .gitlab-license pour le déchiffrer et l’inspecter — rien ne quitte votre navigateur.',
+    inputLabel: 'Contenu du fichier de licence',
+    inputPlaceholder: 'Collez ici le contenu de result.gitlab-license…',
+    upload: 'Téléverser un fichier',
+    keySource: 'Clé de vérification',
+    keySourceCustom: 'Clé publique personnalisée',
+    customKeyPlaceholder: 'Collez ici une clé publique (PEM)…',
+    verifyButton: 'Vérifier la licence',
+    empty: 'Les détails de la licence déchiffrée apparaîtront ici.',
+    okActive: 'Valide — cette licence se déchiffre correctement et n’a pas expiré.',
+    okExpired: 'Cette licence se déchiffre correctement, mais elle a expiré.',
+    decryptFailed: 'Déchiffrement impossible — mauvaise clé, ou ce n’est pas une licence GitLab valide.',
+    status: 'Statut',
+    statusActive: 'Active',
+    statusExpired: 'Expirée',
+  },
   deploy: {
     title: 'Installer la licence dans GitLab',
     intro:
       'GitLab valide les licences avec une clé publique intégrée. Remplacez cette clé publique par celle ci-dessous, puis téléversez le fichier de licence généré.',
     downloadPublicKey: 'Télécharger public.key',
+    keyToInstall: 'Clé publique à installer',
     method: 'Votre déploiement GitLab',
     methods: {
       omnibus: 'Omnibus / paquet Linux',

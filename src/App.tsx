@@ -1,6 +1,12 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ConfigProvider, Tabs, Typography } from 'antd'
+import {
+  FileAddOutlined,
+  KeyOutlined,
+  RocketOutlined,
+  SafetyCertificateOutlined,
+} from '@ant-design/icons'
 import enUS from 'antd/locale/en_US'
 import zhCN from 'antd/locale/zh_CN'
 import frFR from 'antd/locale/fr_FR'
@@ -9,6 +15,7 @@ import type { Locale } from 'antd/es/locale'
 
 import LangSwitcher from './components/LangSwitcher'
 import GenerateTab from './components/GenerateTab'
+import VerifyTab from './components/VerifyTab'
 import DeployInstructions from './components/DeployInstructions'
 import KeyPairPanel from './components/KeyPairPanel'
 import { useKeyPairs } from './lib/useKeyPairs'
@@ -20,7 +27,7 @@ const ANTD_LOCALES: Record<string, Locale> = {
   ru: ruRU,
 }
 
-const TAB_KEYS = ['generate', 'deploy', 'keys']
+const TAB_KEYS = ['generate', 'verify', 'deploy', 'keys']
 const TAB_STORAGE_KEY = 'gllg-tab'
 
 export default function App() {
@@ -96,16 +103,25 @@ export default function App() {
             {
               key: 'generate',
               label: t('tabs.generate'),
+              icon: <FileAddOutlined />,
               children: <GenerateTab keyPairs={keyStore.keyPairs} />,
+            },
+            {
+              key: 'verify',
+              label: t('tabs.verify'),
+              icon: <SafetyCertificateOutlined />,
+              children: <VerifyTab keyPairs={keyStore.keyPairs} />,
             },
             {
               key: 'deploy',
               label: t('tabs.deploy'),
-              children: <DeployInstructions />,
+              icon: <RocketOutlined />,
+              children: <DeployInstructions keyPairs={keyStore.keyPairs} />,
             },
             {
               key: 'keys',
               label: t('tabs.keys'),
+              icon: <KeyOutlined />,
               children: <KeyPairPanel store={keyStore} />,
             },
           ]}

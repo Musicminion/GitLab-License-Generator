@@ -8,6 +8,7 @@ const en = {
   },
   tabs: {
     generate: 'Generate License',
+    verify: 'Verify License',
     deploy: 'Deployment Guide',
     keys: 'Key Tools',
   },
@@ -55,11 +56,32 @@ const en = {
     clear: 'Clear',
     verified: 'Round-trip verified: the file decrypts back to the JSON above.',
   },
+  verify: {
+    title: 'Verify a license',
+    resultTitle: 'Verification result',
+    intro:
+      'Paste or upload a .gitlab-license file to decrypt and inspect it — nothing leaves your browser.',
+    inputLabel: 'License file content',
+    inputPlaceholder: 'Paste the .gitlab-license content here…',
+    upload: 'Upload file',
+    keySource: 'Verification key',
+    keySourceCustom: 'Custom public key',
+    customKeyPlaceholder: 'Paste a public key (PEM) here…',
+    verifyButton: 'Verify license',
+    empty: 'Decrypted license details will appear here.',
+    okActive: 'Valid — this license decrypts correctly and has not expired.',
+    okExpired: 'This license decrypts correctly, but it has expired.',
+    decryptFailed: 'Could not decrypt — wrong key, or this is not a valid GitLab license.',
+    status: 'Status',
+    statusActive: 'Active',
+    statusExpired: 'Expired',
+  },
   deploy: {
     title: 'Install the license in GitLab',
     intro:
       'GitLab validates licenses with a bundled public key. Replace that public key with the one below, then upload the generated license file.',
     downloadPublicKey: 'Download public.key',
+    keyToInstall: 'Public key to install',
     method: 'Your GitLab deployment',
     methods: {
       omnibus: 'Omnibus / Linux package',

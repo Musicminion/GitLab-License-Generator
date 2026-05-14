@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Divider, Segmented, Space, Typography } from 'antd'
+import { Alert, Button, Card, Divider, Radio, Segmented, Select, Space, Typography } from 'antd'
 import { DownloadOutlined } from '@ant-design/icons'
 
 import { BUNDLED_PUBLIC_KEY_PEM } from '../crypto/keys'
 import { downloadText } from '../lib/download'
+import type { StoredKeyPair } from '../lib/useKeyPairs'
 import CodeBlock from './CodeBlock'
 
 type Method = 'omnibus' | 'docker' | 'compose' | 'helm'
@@ -59,18 +60,52 @@ helm upgrade --install gitlab gitlab/gitlab -f values.yaml`,
 
 const SERVICE_PING = `gitlab_rails['usage_ping_enabled'] = false`
 
-export default function DeployInstructions() {
+export default function DeployInstructions({ keyPairs }: { keyPairs: StoredKeyPair[] }) {
   const { t } = useTranslation()
   const [method, setMethod] = useState<Method>('omnibus')
+  const [keySource, setKeySource] = useState<'bundled' | 'generated'>('bundled')
+  const [keyPairId, setKeyPairId] = useState<string | undefined>()
+
+  // Which public key the user should install into GitLab — it must match the
+  // private key the license was signed with.
+  const publicKey = useMemo<string | null>(() => {
+    if (keySource === 'bundled') return BUNDLED_PUBLIC_KEY_PEM
+    return keyPairs.find((kp) => kp.id === keyPairId)?.publicKeyPem ?? null
+  }, [keySource, keyPairId, keyPairs])
 
   return (
     <Card title={t('deploy.title')}>
       <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
         <Typography.Paragraph type="secondary">{t('deploy.intro')}</Typography.Paragraph>
 
+        <div>
+          <Typography.Text strong>{t('deploy.keyToInstall')}</Typography.Text>
+          <div style={{ marginTop: 6 }}>
+            <Radio.Group
+              value={keySource}
+              onChange={(e) => setKeySource(e.target.value as 'bundled' | 'generated')}
+            >
+              <Radio value="bundled">{t('form.keySourceBundled')}</Radio>
+              <Radio value="generated" disabled={keyPairs.length === 0}>
+                {t('form.keySourceGenerated')}
+              </Radio>
+            </Radio.Group>
+          </div>
+          {keySource === 'generated' && keyPairs.length > 0 && (
+            <Select
+              style={{ marginTop: 8, width: '100%', maxWidth: 320 }}
+              value={keyPairId}
+              onChange={setKeyPairId}
+              placeholder={t('form.selectKeyPairPlaceholder')}
+              options={keyPairs.map((kp) => ({ value: kp.id, label: kp.name }))}
+            />
+          )}
+        </div>
+
         <Button
           icon={<DownloadOutlined />}
-          onClick={() => downloadText('public.key', BUNDLED_PUBLIC_KEY_PEM)}
+          disabled={!publicKey}
+          onClick={() => publicKey && downloadText('public.key', publicKey)}
         >
           {t('deploy.downloadPublicKey')}
         </Button>
