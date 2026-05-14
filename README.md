@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="./public/logo.svg" width="128" alt="GitLab License Generator logo" />
+<img src="./public/logo.svg" width="180" alt="GitLab License Generator logo" />
 
 # GitLab License Generator
 

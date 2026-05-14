@@ -72,8 +72,8 @@ export default function App() {
             <img
               className="app-logo"
               src={`${import.meta.env.BASE_URL}logo.svg`}
-              width={56}
-              height={56}
+              width={76}
+              height={76}
               alt=""
             />
             <div>
