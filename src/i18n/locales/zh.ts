@@ -79,7 +79,7 @@ const zh: typeof en = {
       'Helm 步骤为尽力而为的方案,未经官方验证 —— 具体的 values 配置项因 chart 版本而异。',
     uploadTitle: '2. 上传 License',
     uploadDesc:
-      '以管理员身份登录,进入 Admin Area → Settings → General,上传 result.gitlab-license。也可以直接访问 {{url}}。',
+      '以管理员身份登录,进入 Admin Area → Settings → General,然后搜索 License,上传 result.gitlab-license。',
     servicePingTitle: '3. 关闭 Service Ping(可选)',
     servicePingDesc:
       '如需关闭使用数据采集,在 /etc/gitlab/gitlab.rb 中加入以下内容并 reconfigure。',

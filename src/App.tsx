@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ConfigProvider, Tabs, Typography } from 'antd'
 import enUS from 'antd/locale/en_US'
@@ -19,9 +20,27 @@ const ANTD_LOCALES: Record<string, Locale> = {
   ru: ruRU,
 }
 
+const TAB_KEYS = ['generate', 'deploy', 'keys']
+const TAB_STORAGE_KEY = 'gllg-tab'
+
 export default function App() {
   const { t, i18n } = useTranslation()
   const keyStore = useKeyPairs()
+
+  // Remember the active tab across reloads.
+  const [activeTab, setActiveTab] = useState<string>(() => {
+    const stored = localStorage.getItem(TAB_STORAGE_KEY)
+    return stored && TAB_KEYS.includes(stored) ? stored : 'generate'
+  })
+
+  const onTabChange = (key: string) => {
+    setActiveTab(key)
+    try {
+      localStorage.setItem(TAB_STORAGE_KEY, key)
+    } catch {
+      // localStorage may be unavailable — non-fatal.
+    }
+  }
 
   return (
     <ConfigProvider
@@ -70,7 +89,8 @@ export default function App() {
         </header>
 
         <Tabs
-          defaultActiveKey="generate"
+          activeKey={activeTab}
+          onChange={onTabChange}
           size="large"
           items={[
             {

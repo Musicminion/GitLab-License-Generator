@@ -85,7 +85,7 @@ const ru: typeof en = {
       'Шаги для Helm приведены по мере возможности и официально не проверены — конкретные ключи конфигурации зависят от версии chart.',
     uploadTitle: '2. Загрузите лицензию',
     uploadDesc:
-      'Войдите как администратор, откройте Admin Area → Settings → General и загрузите result.gitlab-license. Также можно перейти напрямую по адресу {{url}}.',
+      'Войдите как администратор, откройте Admin Area → Settings → General, затем найдите «License» и загрузите result.gitlab-license.',
     servicePingTitle: '3. Отключите Service Ping (необязательно)',
     servicePingDesc:
       'Чтобы прекратить сбор данных об использовании, добавьте следующее в /etc/gitlab/gitlab.rb и выполните reconfigure.',

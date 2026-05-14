@@ -85,7 +85,7 @@ const fr: typeof en = {
       'Les étapes Helm sont fournies au mieux et ne sont pas officiellement vérifiées — les clés de configuration varient selon la version du chart.',
     uploadTitle: '2. Téléverser la licence',
     uploadDesc:
-      'Connectez-vous en tant qu’administrateur, ouvrez Admin Area → Settings → General et téléversez result.gitlab-license. Vous pouvez aussi aller directement sur {{url}}.',
+      'Connectez-vous en tant qu’administrateur, ouvrez Admin Area → Settings → General, puis recherchez « License » et téléversez result.gitlab-license.',
     servicePingTitle: '3. Désactiver Service Ping (facultatif)',
     servicePingDesc:
       'Pour arrêter la collecte des données d’usage, ajoutez ceci à /etc/gitlab/gitlab.rb puis reconfigurez.',

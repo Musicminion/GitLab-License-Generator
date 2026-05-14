@@ -1,34 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
   <defs>
-    <linearGradient id="badge" x1="24" y1="24" x2="232" y2="232" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ff9ec7"/>
-      <stop offset="0.55" stop-color="#ff5fa0"/>
-      <stop offset="1" stop-color="#ff2e80"/>
+    <linearGradient id="med" x1="90" y1="66" x2="166" y2="142" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ff86b6"/>
+      <stop offset="1" stop-color="#ff3d86"/>
     </linearGradient>
-    <linearGradient id="heart" x1="128" y1="58" x2="128" y2="188" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#ffffff"/>
-      <stop offset="1" stop-color="#ffdcec"/>
-    </linearGradient>
-    <clipPath id="clip"><rect x="12" y="12" width="232" height="232" rx="58"/></clipPath>
   </defs>
 
-  <g clip-path="url(#clip)">
-    <rect x="12" y="12" width="232" height="232" fill="url(#badge)"/>
-    <ellipse cx="120" cy="30" rx="110" ry="38" fill="#ffffff" opacity="0.18"/>
+  <!-- award ribbon tails (behind) -->
+  <polygon points="112,128 134,137 127,208 113.5,192 100,199" fill="#ff5c9e"/>
+  <polygon points="144,128 122,137 129,208 142.5,192 156,199" fill="#e0327c"/>
+
+  <!-- faceted rosette seal — alternating light/dark facets, GitLab style -->
+  <g>
+    <polygon points="117.1,63.4 128,32 138.9,63.4"     fill="#ff96c2"/>
+    <polygon points="138.9,63.4 164,41.7 157.7,74.3"   fill="#ff3d86"/>
+    <polygon points="157.7,74.3 190.4,68 168.6,93.1"   fill="#ff96c2"/>
+    <polygon points="168.6,93.1 200,104 168.6,114.9"   fill="#ff3d86"/>
+    <polygon points="168.6,114.9 190.4,140 157.7,133.7" fill="#ff96c2"/>
+    <polygon points="157.7,133.7 164,166.4 138.9,144.6" fill="#ff3d86"/>
+    <polygon points="138.9,144.6 128,176 117.1,144.6"  fill="#ff96c2"/>
+    <polygon points="117.1,144.6 92,166.4 98.3,133.7"  fill="#ff3d86"/>
+    <polygon points="98.3,133.7 65.6,140 87.4,114.9"   fill="#ff96c2"/>
+    <polygon points="87.4,114.9 56,104 87.4,93.1"      fill="#ff3d86"/>
+    <polygon points="87.4,93.1 65.6,68 98.3,74.3"      fill="#ff96c2"/>
+    <polygon points="98.3,74.3 92,41.7 117.1,63.4"     fill="#ff3d86"/>
   </g>
 
-  <!-- heart -->
-  <path d="M128 184 C90 153 62 131 62 100 C62 79 79 63 99 63 C113 63 123 70 128 81 C133 70 143 63 157 63 C177 63 194 79 194 100 C194 131 166 153 128 184 Z" fill="url(#heart)"/>
+  <!-- medallion -->
+  <circle cx="128" cy="104" r="44" fill="url(#med)" stroke="#ffffff" stroke-width="4"/>
 
-  <!-- keyhole cut into the heart -->
-  <circle cx="128" cy="106" r="17" fill="url(#badge)"/>
-  <path d="M119 117 H137 L143 153 H113 Z" fill="url(#badge)"/>
-
-  <!-- sparkles -->
-  <g fill="#ffffff">
-    <path transform="translate(198,72) scale(1.6)" d="M0 -10 Q2 -2 10 0 Q2 2 0 10 Q-2 2 -10 0 Q-2 -2 0 -10 Z"/>
-    <path transform="translate(58,168) scale(1.15)" d="M0 -10 Q2 -2 10 0 Q2 2 0 10 Q-2 2 -10 0 Q-2 -2 0 -10 Z"/>
-    <path transform="translate(74,70) scale(0.7)" d="M0 -10 Q2 -2 10 0 Q2 2 0 10 Q-2 2 -10 0 Q-2 -2 0 -10 Z"/>
-    <path transform="translate(190,182) scale(0.62)" d="M0 -10 Q2 -2 10 0 Q2 2 0 10 Q-2 2 -10 0 Q-2 -2 0 -10 Z"/>
-  </g>
+  <!-- "licensed" checkmark -->
+  <path d="M108 105 L123 120 L151 86" stroke="#ffffff" stroke-width="13"
+        stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>

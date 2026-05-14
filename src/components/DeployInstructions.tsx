@@ -59,8 +59,6 @@ helm upgrade --install gitlab gitlab/gitlab -f values.yaml`,
 
 const SERVICE_PING = `gitlab_rails['usage_ping_enabled'] = false`
 
-const UPLOAD_URL = '<YourGitLabURL>/admin/license/new'
-
 export default function DeployInstructions() {
   const { t } = useTranslation()
   const [method, setMethod] = useState<Method>('omnibus')
@@ -112,7 +110,7 @@ export default function DeployInstructions() {
         <div>
           <Typography.Title level={5}>{t('deploy.uploadTitle')}</Typography.Title>
           <Typography.Paragraph type="secondary">
-            {t('deploy.uploadDesc', { url: UPLOAD_URL })}
+            {t('deploy.uploadDesc')}
           </Typography.Paragraph>
         </div>
 

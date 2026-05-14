@@ -82,7 +82,7 @@ const en = {
       'The Helm steps are best-effort and not officially verified — exact values keys vary by chart version.',
     uploadTitle: '2. Upload the license',
     uploadDesc:
-      'Sign in as an administrator, open Admin Area → Settings → General, and upload result.gitlab-license. You can also go directly to {{url}}.',
+      'Sign in as an administrator, open Admin Area → Settings → General, then search for License and upload result.gitlab-license.',
     servicePingTitle: '3. Disable Service Ping (optional)',
     servicePingDesc:
       'To stop usage data collection, add the following to /etc/gitlab/gitlab.rb and reconfigure.',
