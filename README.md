@@ -7,6 +7,17 @@
 A static web app that generates GitLab development licenses **entirely in your browser**.
 Built with React + Ant Design. No backend, no data leaves your machine.
 
+### [🚀 Open the Live App](https://musicminion.github.io/GitLab-License-Generator/)
+
+[![Live Demo](https://img.shields.io/badge/Live_Demo-musicminion.github.io-ff6fa5?style=for-the-badge&logo=githubpages&logoColor=white)](https://musicminion.github.io/GitLab-License-Generator/)
+
+[![Deploy](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/deploy.yml)
+[![Docker Image](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/docker-image.yml)
+[![React](https://img.shields.io/badge/React-18-149ECA?logo=react&logoColor=white)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Ant Design](https://img.shields.io/badge/Ant%20Design-5-0170FE?logo=antdesign&logoColor=white)](https://ant.design)
+[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-ff6fa5)](LICENSE)
+
 </div>
 
 > For **development and testing purposes** only. You are responsible for complying
