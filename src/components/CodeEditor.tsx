@@ -27,6 +27,9 @@ const theme = EditorView.theme({
     fontFamily: "'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace",
     padding: '10px 4px',
   },
+  // Make wrapped long lines break at any character — license blobs are one
+  // giant base64 string with no spaces, so word-wrap alone won't break them.
+  '.cm-line': { wordBreak: 'break-all' },
   '.cm-gutters': {
     backgroundColor: '#fff0f6',
     color: '#d65a91',
@@ -51,7 +54,10 @@ export default function CodeEditor({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      extensions={language === 'json' ? [json()] : []}
+      extensions={[
+        EditorView.lineWrapping,
+        ...(language === 'json' ? [json()] : []),
+      ]}
       theme={theme}
       basicSetup={{
         lineNumbers: true,

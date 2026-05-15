@@ -110,8 +110,8 @@ export default function VerifyTab({ keyPairs }: { keyPairs: StoredKeyPair[] }) {
                   value={blob}
                   onChange={setBlob}
                   placeholder={t('verify.inputPlaceholder')}
-                  minHeight={180}
-                  maxHeight={280}
+                  minHeight={280}
+                  maxHeight={420}
                 />
               </div>
               <Upload
