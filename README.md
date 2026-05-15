@@ -7,16 +7,21 @@
 A static web app that generates GitLab development licenses **entirely in your browser**.
 Built with React + Ant Design. No backend, no data leaves your machine.
 
-### [🚀 Open the Live App](https://musicminion.github.io/GitLab-License-Generator/)
+<p>
+  <a href="https://musicminion.github.io/GitLab-License-Generator/"><img alt="Live App" src="https://img.shields.io/badge/%E2%9C%A8%20Live%20App-Open%20Now-ff4f93?style=for-the-badge&logoColor=white"></a>&nbsp;
+  <a href="https://github.com/Musicminion/GitLab-License-Generator"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-Source-24292e?style=for-the-badge&logo=github&logoColor=white"></a>&nbsp;
+  <a href="https://github.com/Musicminion/GitLab-License-Generator/pkgs/container/gitlab-license-generator"><img alt="Container Image" src="https://img.shields.io/badge/Container-ghcr.io-2496ED?style=for-the-badge&logo=docker&logoColor=white"></a>&nbsp;
+  <a href="https://github.com/Musicminion/GitLab-License-Generator/issues"><img alt="Issues" src="https://img.shields.io/badge/Report-Issue-fb6c45?style=for-the-badge&logo=githubactions&logoColor=white"></a>
+</p>
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-musicminion.github.io-ff6fa5?style=for-the-badge&logo=githubpages&logoColor=white)](https://musicminion.github.io/GitLab-License-Generator/)
-
-[![Deploy](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/deploy.yml/badge.svg)](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/deploy.yml)
-[![Docker Image](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/docker-image.yml)
-[![React](https://img.shields.io/badge/React-18-149ECA?logo=react&logoColor=white)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
-[![Ant Design](https://img.shields.io/badge/Ant%20Design-5-0170FE?logo=antdesign&logoColor=white)](https://ant.design)
-[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-ff6fa5)](LICENSE)
+<p>
+  <a href="https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/deploy.yml"><img alt="Deploy" src="https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/deploy.yml/badge.svg"></a>
+  <a href="https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/docker-image.yml"><img alt="Docker Image" src="https://github.com/Musicminion/GitLab-License-Generator/actions/workflows/docker-image.yml/badge.svg"></a>
+  <img alt="React" src="https://img.shields.io/badge/React-18-149ECA?logo=react&logoColor=white">
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white">
+  <img alt="Ant Design" src="https://img.shields.io/badge/Ant%20Design-5-0170FE?logo=antdesign&logoColor=white">
+  <a href="LICENSE"><img alt="License: WTFPL" src="https://img.shields.io/badge/License-WTFPL-ff6fa5"></a>
+</p>
 
 </div>
 
