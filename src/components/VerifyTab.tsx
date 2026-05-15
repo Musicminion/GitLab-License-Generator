@@ -7,7 +7,6 @@ import {
   Col,
   Descriptions,
   Empty,
-  Input,
   Radio,
   Row,
   Select,
@@ -23,6 +22,7 @@ import { decryptLicense } from '../crypto/encryptor'
 import { BUNDLED_PUBLIC_KEY_PEM } from '../crypto/keys'
 import type { StoredKeyPair } from '../lib/useKeyPairs'
 import CodeBlock from './CodeBlock'
+import CodeEditor from './CodeEditor'
 
 interface ParsedLicense {
   licensee?: { Name?: string; Company?: string; Email?: string }
@@ -105,13 +105,15 @@ export default function VerifyTab({ keyPairs }: { keyPairs: StoredKeyPair[] }) {
 
             <div>
               <Typography.Text strong>{t('verify.inputLabel')}</Typography.Text>
-              <Input.TextArea
-                style={{ marginTop: 6 }}
-                rows={6}
-                value={blob}
-                onChange={(e) => setBlob(e.target.value)}
-                placeholder={t('verify.inputPlaceholder')}
-              />
+              <div style={{ marginTop: 6 }}>
+                <CodeEditor
+                  value={blob}
+                  onChange={setBlob}
+                  placeholder={t('verify.inputPlaceholder')}
+                  minHeight={180}
+                  maxHeight={280}
+                />
+              </div>
               <Upload
                 beforeUpload={onUpload}
                 showUploadList={false}
@@ -147,13 +149,15 @@ export default function VerifyTab({ keyPairs }: { keyPairs: StoredKeyPair[] }) {
                 />
               )}
               {keySource === 'custom' && (
-                <Input.TextArea
-                  style={{ marginTop: 8 }}
-                  rows={4}
-                  value={customKey}
-                  onChange={(e) => setCustomKey(e.target.value)}
-                  placeholder={t('verify.customKeyPlaceholder')}
-                />
+                <div style={{ marginTop: 8 }}>
+                  <CodeEditor
+                    value={customKey}
+                    onChange={setCustomKey}
+                    placeholder={t('verify.customKeyPlaceholder')}
+                    minHeight={140}
+                    maxHeight={220}
+                  />
+                </div>
               )}
             </div>
 

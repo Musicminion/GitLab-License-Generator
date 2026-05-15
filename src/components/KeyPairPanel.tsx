@@ -1,9 +1,30 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Collapse, Empty, List, Popconfirm, Space, Typography, message } from 'antd'
-import { DeleteOutlined, DownloadOutlined, KeyOutlined } from '@ant-design/icons'
+import {
+  Alert,
+  Button,
+  Card,
+  Collapse,
+  Empty,
+  Input,
+  List,
+  Popconfirm,
+  Space,
+  Typography,
+  Upload,
+  message,
+} from 'antd'
+import {
+  DeleteOutlined,
+  DownloadOutlined,
+  ImportOutlined,
+  KeyOutlined,
+  UploadOutlined,
+} from '@ant-design/icons'
+import type { UploadProps } from 'antd'
 
-import { generateKeyPair } from '../crypto/keygen'
+import { generateKeyPair, importKeyPair } from '../crypto/keygen'
+import CodeEditor from './CodeEditor'
 import { BUNDLED_PUBLIC_KEY_PEM } from '../crypto/keys'
 import { downloadText } from '../lib/download'
 import type { KeyPairStore } from '../lib/useKeyPairs'
@@ -12,6 +33,37 @@ import CodeBlock from './CodeBlock'
 export default function KeyPairPanel({ store }: { store: KeyPairStore }) {
   const { t } = useTranslation()
   const [loading, setLoading] = useState(false)
+  const [importPrivate, setImportPrivate] = useState('')
+  const [importPublic, setImportPublic] = useState('')
+  const [importName, setImportName] = useState('')
+
+  const onUploadPem = (set: (v: string) => void): UploadProps['beforeUpload'] => (file) => {
+    const reader = new FileReader()
+    reader.onload = () => set(String(reader.result ?? '').trim())
+    reader.readAsText(file)
+    return false
+  }
+
+  const handleImport = () => {
+    if (!importPrivate.trim()) {
+      message.error(t('keys.importPrivateRequired'))
+      return
+    }
+    try {
+      const pair = importKeyPair(importPrivate, importPublic)
+      store.addKeyPair(pair, importName.trim() || t('keys.importedName'))
+      setImportPrivate('')
+      setImportPublic('')
+      setImportName('')
+      message.success(t('keys.importSuccess'))
+    } catch (err) {
+      const code = err instanceof Error ? err.message : ''
+      const key = ['invalidPrivate', 'invalidPublic', 'keyMismatch'].includes(code)
+        ? `keys.import_${code}`
+        : 'keys.importFailed'
+      message.error(t(key))
+    }
+  }
 
   const handleGenerate = async () => {
     setLoading(true)
@@ -63,6 +115,61 @@ export default function KeyPairPanel({ store }: { store: KeyPairStore }) {
         <Typography.Paragraph type="secondary" style={{ fontSize: 12, marginTop: 12, marginBottom: 0 }}>
           {t('keys.savedHint')}
         </Typography.Paragraph>
+      </Card>
+
+      <Card title={t('keys.importTitle')}>
+        <Typography.Paragraph type="secondary">{t('keys.importIntro')}</Typography.Paragraph>
+        <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+          <div>
+            <Typography.Text strong>{t('keys.importPublicLabel')}</Typography.Text>
+            <Typography.Text type="secondary" style={{ marginLeft: 6, fontSize: 12 }}>
+              {t('keys.importPublicHint')}
+            </Typography.Text>
+            <div style={{ marginTop: 6 }}>
+              <CodeEditor
+                value={importPublic}
+                onChange={setImportPublic}
+                placeholder={t('keys.importPublicPlaceholder')}
+                minHeight={140}
+                maxHeight={220}
+              />
+            </div>
+            <Upload beforeUpload={onUploadPem(setImportPublic)} showUploadList={false} accept=".key,.pem,.txt">
+              <Button size="small" style={{ marginTop: 6 }} icon={<UploadOutlined />}>
+                {t('keys.importUploadFile')}
+              </Button>
+            </Upload>
+          </div>
+          <div>
+            <Typography.Text strong>{t('keys.importPrivateLabel')}</Typography.Text>
+            <div style={{ marginTop: 6 }}>
+              <CodeEditor
+                value={importPrivate}
+                onChange={setImportPrivate}
+                placeholder={t('keys.importPrivatePlaceholder')}
+                minHeight={160}
+                maxHeight={260}
+              />
+            </div>
+            <Upload beforeUpload={onUploadPem(setImportPrivate)} showUploadList={false} accept=".key,.pem,.txt">
+              <Button size="small" style={{ marginTop: 6 }} icon={<UploadOutlined />}>
+                {t('keys.importUploadFile')}
+              </Button>
+            </Upload>
+          </div>
+          <div>
+            <Typography.Text strong>{t('keys.importNameLabel')}</Typography.Text>
+            <Input
+              style={{ marginTop: 6 }}
+              value={importName}
+              onChange={(e) => setImportName(e.target.value)}
+              placeholder={t('keys.importNamePlaceholder')}
+            />
+          </div>
+          <Button type="primary" icon={<ImportOutlined />} onClick={handleImport}>
+            {t('keys.importButton')}
+          </Button>
+        </Space>
       </Card>
 
       <Card title={`${t('keys.listTitle')} (${store.keyPairs.length})`}>

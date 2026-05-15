@@ -1,7 +1,23 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Alert, Button, Card, Divider, Radio, Segmented, Select, Space, Typography } from 'antd'
-import { DownloadOutlined } from '@ant-design/icons'
+import { Alert, Button, Card, Divider, Radio, Select, Space, Typography } from 'antd'
+import {
+  AppstoreOutlined,
+  CloudServerOutlined,
+  DownloadOutlined,
+  LinuxOutlined,
+} from '@ant-design/icons'
+import Icon from '@ant-design/icons'
+import type { ReactNode } from 'react'
+
+// Docker whale glyph — Ant Design ships no brand icons, so we use the
+// official Docker mark as a custom SVG.
+const DockerSvg = () => (
+  <svg viewBox="0 0 24 24" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+    <path d="M13.98 11.06h2.05V9.18h-2.05v1.88zm-2.46 0h2.05V9.18h-2.05v1.88zm-2.45 0h2.04V9.18H9.07v1.88zm-2.46 0h2.05V9.18H6.61v1.88zm-2.45 0h2.04V9.18H4.16v1.88zm2.45-2.3h2.05V6.88H6.61v1.88zm2.46 0h2.04V6.88H9.07v1.88zm2.45 0h2.05V6.88h-2.05v1.88zm0-2.3h2.05V4.58h-2.05v1.88zm10.6 4.94c-.06-.05-.62-.47-1.79-.47-.31 0-.63.03-.94.09-.23-1.59-1.54-2.36-1.6-2.4l-.32-.18-.21.3c-.27.41-.46.87-.58 1.35-.22.92-.09 1.78.39 2.52-.57.32-1.5.4-1.69.4H1.36c-.4 0-.72.32-.72.72-.02 1.35.21 2.69.69 3.95.55 1.39 1.36 2.41 2.41 3.03 1.18.71 3.1 1.11 5.27 1.11.98.01 1.96-.08 2.92-.27 1.34-.25 2.62-.74 3.79-1.43.96-.59 1.83-1.32 2.57-2.17 1.24-1.42 1.98-3 2.53-4.4h.22c1.25 0 2.02-.5 2.44-.92.28-.26.49-.58.65-.93l.09-.27-.25-.13z" />
+  </svg>
+)
+const DockerIcon = (props: object) => <Icon component={DockerSvg} {...props} />
 
 import { BUNDLED_PUBLIC_KEY_PEM } from '../crypto/keys'
 import { downloadText } from '../lib/download'
@@ -60,6 +76,13 @@ helm upgrade --install gitlab gitlab/gitlab -f values.yaml`,
 
 const SERVICE_PING = `gitlab_rails['usage_ping_enabled'] = false`
 
+const METHOD_ICONS: Record<Method, ReactNode> = {
+  omnibus: <LinuxOutlined />,
+  docker: <DockerIcon />,
+  compose: <AppstoreOutlined />,
+  helm: <CloudServerOutlined />,
+}
+
 export default function DeployInstructions({ keyPairs }: { keyPairs: StoredKeyPair[] }) {
   const { t } = useTranslation()
   const [method, setMethod] = useState<Method>('omnibus')
@@ -114,15 +137,22 @@ export default function DeployInstructions({ keyPairs }: { keyPairs: StoredKeyPa
 
         <div>
           <Typography.Text strong>{t('deploy.method')}</Typography.Text>
-          <div style={{ marginTop: 8 }}>
-            <Segmented<Method>
+          <div className="deploy-method-picker" style={{ marginTop: 8 }}>
+            <Radio.Group
               value={method}
-              onChange={setMethod}
-              options={(['omnibus', 'docker', 'compose', 'helm'] as Method[]).map((m) => ({
-                value: m,
-                label: t(`deploy.methods.${m}`),
-              }))}
-            />
+              onChange={(e) => setMethod(e.target.value as Method)}
+              optionType="button"
+              buttonStyle="solid"
+            >
+              {(['omnibus', 'docker', 'compose', 'helm'] as Method[]).map((m) => (
+                <Radio.Button key={m} value={m}>
+                  <Space size={6}>
+                    {METHOD_ICONS[m]}
+                    {t(`deploy.methods.${m}`)}
+                  </Space>
+                </Radio.Button>
+              ))}
+            </Radio.Group>
           </div>
         </div>
 
